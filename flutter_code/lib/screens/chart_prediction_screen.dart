@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../custom_colors.dart';
-
+import 'profile.dart';
 import 'chart_history_screen.dart';
 
 
@@ -33,6 +33,7 @@ class _PredictionChart extends State<PredictionChart>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColor().mainColor,
         title: Text("Predikcije troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),),
       ),
       body: Column(
@@ -71,23 +72,32 @@ class _PredictionChart extends State<PredictionChart>{
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart()));
           }
+          else if (_currentIndex == 3){
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
+          }
         }),
         items: [
           /// Home
           SalomonBottomBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.receipt_outlined),
             title: Text("Troškovi"),
             selectedColor: CustomColor().mainColor,
           ),
 
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.analytics_outlined,),
             title: Text("Potrošnja"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.insights_outlined),
+            title: Text("Predikcija"),
+            selectedColor: CustomColor().mainColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(Icons.account_circle_outlined),
             title: Text("Predikcija"),
             selectedColor: CustomColor().mainColor,
           ),

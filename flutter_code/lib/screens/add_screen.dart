@@ -74,6 +74,7 @@ class _DodajTrosak extends State<DodajTrosak>{
               ),
           )
         ],
+        backgroundColor: CustomColor().mainColor,
       ),
       body:
       SingleChildScrollView(
@@ -190,6 +191,7 @@ class _DodajTrosak extends State<DodajTrosak>{
                 Container(
                   height: 48,
                   child: FloatingActionButton(
+                    backgroundColor: CustomColor().mainColor,
                     heroTag: "nesto",
                     child: Icon(Icons.add_card),
                     onPressed: () {
@@ -203,13 +205,15 @@ class _DodajTrosak extends State<DodajTrosak>{
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColor().mainColor,
         onPressed: () async {
           var date = DateTime.parse(widget._selectedDate);
           if(date.hour == 0) date = date.subtract(Duration(minutes: 1));
           print("sending receipt");
           await hr.newReceipt("cat", "description", 6566, ["tvoja mama"]);
           Navigator.pop(context);
-          },
+        
+        },
         tooltip: 'Increment',
         child: const Icon(
           Icons.send_outlined,

@@ -16,7 +16,7 @@ class CustomCard extends StatelessWidget{
       width: double.infinity,
       margin: EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: Card(
-          elevation: 5,
+          elevation: 3,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16)
           ),

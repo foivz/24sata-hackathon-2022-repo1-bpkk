@@ -11,13 +11,15 @@ import 'widgets/card.dart';
 import 'screens/add_screen.dart';
 import 'screens/chart_history_screen.dart';
 import 'screens/chart_prediction_screen.dart';
+
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'screens/login_screen.dart';
+import 'screens/profile.dart';
 
 void main() async {
   await Hive.initFlutter();
-
   runApp(const MyApp());
 }
 
@@ -89,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: CustomColor().mainColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -101,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColor().mainColor,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosak())).then((value) => setState(() {
             _currentIndex = 0;
@@ -127,24 +131,31 @@ class _MyHomePageState extends State<MyHomePage> {
               getCards();
             }));
           }
+          else if (_currentIndex == 3){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Profile())).then((value) => setState(() {_currentIndex = 0;}));
+          }
         }),
         items: [
           /// Home
           SalomonBottomBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.receipt_outlined),
             title: Text("Troškovi"),
             selectedColor: CustomColor().mainColor,
           ),
-
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.analytics_outlined,),
             title: Text("Potrošnja"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.insights_outlined),
             title: Text("Predikcija"),
+            selectedColor: CustomColor().mainColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            title: Text("Profil"),
             selectedColor: CustomColor().mainColor,
           ),
         ],

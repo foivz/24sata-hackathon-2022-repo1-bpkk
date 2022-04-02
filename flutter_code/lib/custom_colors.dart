@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
 class CustomColor{
-  Color mainColor = const Color(0xff2467D4);
-
+  Color mainColor = const Color(0xff38B09D);
 }
