@@ -7,6 +7,7 @@ import 'widgets/card.dart';
 
 import 'screens/add_screen.dart';
 import 'screens/chart_history_screen.dart';
+import 'screens/chart_prediction_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,16 +47,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-          ],
+        child: SingleChildScrollView(
+          child:
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -72,7 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           if (_currentIndex == 1){
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
-
+          }
+          else if (_currentIndex == 2){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));
           }
         }),
         items: [
@@ -87,6 +96,11 @@ class _MyHomePageState extends State<MyHomePage> {
           SalomonBottomBarItem(
             icon: Icon(Icons.show_chart_outlined),
             title: Text("Potrošnja"),
+            selectedColor: CustomColor().mainColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(Icons.show_chart_outlined),
+            title: Text("Predikcija"),
             selectedColor: CustomColor().mainColor,
           ),
         ],
