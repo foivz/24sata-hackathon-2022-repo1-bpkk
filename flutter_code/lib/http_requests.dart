@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as Http;
 import 'package:http_parser/http_parser.dart' as hp;
+import 'package:intl/intl.dart';
 
 bool debug = true;
 String token = "";
@@ -16,7 +17,7 @@ class HTTPRequest {
   Box? tokenBox;
   Box? usernameBox;
 
-  final String domain = 'http://172.31.98.235:4000';
+  final String domain = 'http://192.168.254.20:4000';
   Map<String, String> headers = HashMap();
 
   HTTPRequest() {
@@ -143,8 +144,10 @@ class HTTPRequest {
     ];
   }
 
-  Future<List> newReceipt(String category, String description, int price, bool items) async {
+  Future<List> newReceipt(String category, String description, int price, bool items, {DateTime time}) async {
     await checkBoxes();
+
+    final DateFormat formatter = DateFormat('%Y-%m-%d %H:%M:%S');
 
     String endpoint = "/new/";
     Http.Response response = await _sendPostRequest(endpoint: endpoint, dict: {
@@ -152,6 +155,7 @@ class HTTPRequest {
       "description": description,
       "price": price,
       "items": items,
+      "time": formatter.format(time),
     }, sendToken: true);
     return [
       response.statusCode,

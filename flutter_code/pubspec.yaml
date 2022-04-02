@@ -37,6 +37,7 @@ dependencies:
   charts_painter: ^2.0.0+1
   hive:
   http:
+  intl:
 
 
   # The following adds the Cupertino Icons font to your application.
