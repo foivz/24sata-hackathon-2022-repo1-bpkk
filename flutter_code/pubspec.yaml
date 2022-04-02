@@ -35,9 +35,11 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.4.56
   syncfusion_flutter_charts: ^19.4.56
   charts_painter: ^2.0.0+1
-  hive:
+  hive: ^2.0.5
+  hive_flutter: ^1.1.0
   http:
   intl:
+  image_picker: ^0.8.4+11
 
 
   # The following adds the Cupertino Icons font to your application.

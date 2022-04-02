@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_code/screens/upload_receipt.dart';
+import 'package:flutter_code/http_requests.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter_code/custom_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_time_patterns.dart';
-import 'package:flutter_code/http_requests.dart';
+import 'package:image_picker/image_picker.dart';
 
 
-class DodajTrosak extends StatefulWidget{
+class DodajTrosakCamera extends StatefulWidget{
 
   int dropdownvalue = 0;
   String _selectedDate = DateTime.now().toString();
@@ -19,11 +19,12 @@ class DodajTrosak extends StatefulWidget{
   String _rangeCount = '';
 
   @override
-  _DodajTrosak createState() => _DodajTrosak();
+  _DodajTrosakCamera createState() => _DodajTrosakCamera();
 }
 
-class _DodajTrosak extends State<DodajTrosak>{
+class _DodajTrosakCamera extends State<DodajTrosakCamera>{
 
+  XFile? imageFile;
   HTTPRequest hr = HTTPRequest();
 
   @override
@@ -36,7 +37,7 @@ class _DodajTrosak extends State<DodajTrosak>{
 
 
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-      setState(() {
+      //setState(() {
         if (args.value is PickerDateRange) {
           widget._range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
           // ignore: lines_longer_than_80_chars
@@ -48,33 +49,26 @@ class _DodajTrosak extends State<DodajTrosak>{
         } else {
           widget._rangeCount = args.value.length.toString();
         }
-      });
+      //});
     }
-
-    List<DropdownMenuItem<int>> categoryList = [
-      DropdownMenuItem(
-        child: Text("Hrana", style: GoogleFonts.quicksand(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey[600]),),
-        value: 0,
-      ),
-      DropdownMenuItem(
-        child: Text("Elektronika"),
-        value: 1,
-      ),
+    List categories = [
+      "Hrana",
+      "Elektronika"
     ];
 
+    List<DropdownMenuItem<int>> categoryList = [ ];
+
+    for(int i = 0; i < categories.length; i++){
+      categoryList.add(
+        DropdownMenuItem(
+          child: Text(categories[i], style: GoogleFonts.quicksand(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey[600]),),
+          value: i,
+        ),
+      );
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosakCamera()));
-              },
-              icon: const Icon(
-                Icons.photo_camera_outlined,
-              ),
-          )
-        ],
-      ),
+      appBar: AppBar(),
       body:
       SingleChildScrollView(
         child: Column(
@@ -92,10 +86,11 @@ class _DodajTrosak extends State<DodajTrosak>{
                       icon: const Icon(Icons.keyboard_arrow_down),
                       items: categoryList,
                       onChanged: (newValue) {
-                        setState(() {
+                        //setState(() {
                           widget.dropdownvalue = newValue!;
+                          _titleController.text = _titleController.text;
                           print(newValue);
-                        });
+                        //});
                       },
                       decoration: InputDecoration(
                         enabled: true,
@@ -114,20 +109,13 @@ class _DodajTrosak extends State<DodajTrosak>{
                   child: Container(
                     padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     width: 128,
-                    child:  TextFormField(
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
-                        ),
-                        hintText: "Cijena",
-                        helperMaxLines: 128,
-                        hintStyle: GoogleFonts.quicksand(
-                          textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
-                        ),
-                      ),
+                    child:  ElevatedButton(
+                      onPressed: () async {
+                        var pic = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 100);
+                        imageFile = pic;
+                        //print((await hr.uploadImage(pic, "category", "description"))[0]);
+                      },
+                      child: Text("Učitaj sliku"),
                     ),
                   ),
                 ),
@@ -163,42 +151,6 @@ class _DodajTrosak extends State<DodajTrosak>{
                     DateTime.now().add(const Duration(days: 3))),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 256,
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
-                  child: TextFormField(
-                    controller: _articlecontroller,
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
-                      ),
-                      hintText: "Ime artikla",
-                      helperMaxLines: 128,
-                      hintStyle: GoogleFonts.quicksand(
-                        textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 48,
-                  child: FloatingActionButton(
-                    heroTag: "nesto",
-                    child: Icon(Icons.add_card),
-                    onPressed: () {
-
-                    },
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -206,10 +158,10 @@ class _DodajTrosak extends State<DodajTrosak>{
         onPressed: () async {
           var date = DateTime.parse(widget._selectedDate);
           if(date.hour == 0) date = date.subtract(Duration(minutes: 1));
-          print("sending receipt");
-          await hr.newReceipt("cat", "description", 6566, ["tvoja mama"]);
+          await hr.uploadImage(imageFile, categories[widget.dropdownvalue], _titleController.text, date);
           Navigator.pop(context);
-          },
+          Navigator.pop(context);
+        },
         tooltip: 'Increment',
         child: const Icon(
           Icons.send_outlined,

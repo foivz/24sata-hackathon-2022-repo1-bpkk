@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_code/http_requests.dart';
 import 'package:flutter_code/screens/add_screen.dart';
+import 'package:http/http.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'custom_colors.dart';
 
@@ -8,8 +11,13 @@ import 'widgets/card.dart';
 import 'screens/add_screen.dart';
 import 'screens/chart_history_screen.dart';
 import 'screens/chart_prediction_screen.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
   runApp(const MyApp());
 }
 
@@ -37,9 +45,45 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  @override
-  Widget build(BuildContext context) {
+  List<Widget> cards = [ ];
+  HTTPRequest hr = HTTPRequest();
 
+  void getCards(){
+    cards.clear();
+
+    hr.getReceipts().then((value) {
+      setState(() {
+        var receipts = value[1];
+        for(int i = 0; i < receipts.length; i++){
+          var receipt = receipts[i];
+          print(receipt);
+          var date = DateTime.parse(receipt["date"]);
+          final DateFormat formatter = DateFormat('dd.MM.yyyy.');
+          cards.add(
+            CustomCard(
+                receipt["category"],
+                receipt["description"],
+                formatter.format(date),
+                receipt["price"].toString()
+            ),
+          );
+        }
+        cards = List.from(cards.reversed);
+      });
+    });
+  }
+
+  void initState(){
+    super.initState();
+    hr.loginRequest("test", "OvoJeTest123!").then(
+        (_){
+          getCards();
+        }
+    );
+  }
+
+  @override
+  Widget build(BuildContext context){
     int _currentIndex = 0;
 
     return Scaffold(
@@ -52,22 +96,16 @@ class _MyHomePageState extends State<MyHomePage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            ],
+            children: cards,
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosak())).then((value) => setState(() {_currentIndex = 0;}));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosak())).then((value) => setState(() {
+            _currentIndex = 0;
+            getCards();
+          }));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -78,10 +116,16 @@ class _MyHomePageState extends State<MyHomePage> {
           _currentIndex = i;
 
           if (_currentIndex == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {
+              _currentIndex = 0;
+              getCards();
+            }));
           }
           else if (_currentIndex == 2){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {
+              _currentIndex = 0;
+              getCards();
+            }));
           }
         }),
         items: [

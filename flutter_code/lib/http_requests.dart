@@ -9,8 +9,9 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as Http;
 import 'package:http_parser/http_parser.dart' as hp;
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
-bool debug = true;
+bool debug = false;
 String token = "";
 
 class HTTPRequest {
@@ -149,7 +150,7 @@ class HTTPRequest {
   }
 
   Future<List> newReceipt(
-      String category, String description, int price, String items,
+      String category, String description, int price, List items,
       {DateTime? time}) async {
     await checkBoxes();
 
@@ -163,13 +164,48 @@ class HTTPRequest {
           "category": category,
           "description": description,
           "price": price,
-          "items": items.split(" "),
+          "items": items,
           "time": time == null ? null : formatter.format(time),
         },
         sendToken: true);
     return [
       response.statusCode,
       jsonDecode(utf8.decode(response.body.codeUnits))
+    ];
+  }
+
+  Future<List> uploadImage(XFile? img, String category, String description, DateTime time) async {
+    await checkBoxes();
+    if (img == null) {
+      throw Exception("No good");
+    }
+
+    final DateFormat formatter = DateFormat('yyyy-MM-ddTkk:mm:ss');
+
+    String endpoint = "/getData/";
+    Map<String, String> newHeaders = HashMap();
+    if (!debug) {
+      if (tokenBox!.keys.contains("token")) {
+        print(tokenBox!.get("token"));
+        token = tokenBox!.get("token");
+        print(token);
+      }
+      else {
+        print("no token o_o");
+      }
+    }
+    print(token);
+    var request = Http.MultipartRequest("POST", Uri.parse(domain + endpoint))
+      ..headers['X-Token'] = token
+      ..headers['category'] = category
+      ..headers['description'] = description
+      ..headers['time'] = formatter.format(time)
+      ..files.add(await Http.MultipartFile.fromPath("file", img.path, contentType: hp.MediaType("image", "png")));
+
+    var response = await request.send();
+
+    return [
+      response.statusCode,
     ];
   }
 
