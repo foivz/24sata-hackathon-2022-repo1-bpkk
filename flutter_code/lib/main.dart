@@ -8,6 +8,7 @@ import 'widgets/card.dart';
 import 'screens/add_screen.dart';
 import 'screens/chart_history_screen.dart';
 import 'screens/chart_prediction_screen.dart';
+import 'screens/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,23 +84,32 @@ class _MyHomePageState extends State<MyHomePage> {
           else if (_currentIndex == 2){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));
           }
+
+          else if (_currentIndex == 3){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Profile())).then((value) => setState(() {_currentIndex = 0;}));
+          }
         }),
         items: [
           /// Home
           SalomonBottomBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.receipt_outlined),
             title: Text("Troškovi"),
             selectedColor: CustomColor().mainColor,
           ),
 
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.analytics_outlined,),
             title: Text("Potrošnja"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.show_chart_outlined),
+            icon: Icon(Icons.insights_outlined),
+            title: Text("Predikcija"),
+            selectedColor: CustomColor().mainColor,
+          ),
+          SalomonBottomBarItem(
+            icon: Icon(Icons.account_circle_outlined),
             title: Text("Predikcija"),
             selectedColor: CustomColor().mainColor,
           ),
