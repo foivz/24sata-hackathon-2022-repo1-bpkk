@@ -33,6 +33,7 @@ class _PredictionChart extends State<PredictionChart>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColor().mainColor,
         title: Text("Predikcije troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),),
       ),
       body: Column(

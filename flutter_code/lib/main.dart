@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _currentIndex = i;
 
           if (_currentIndex == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
           }
           else if (_currentIndex == 2){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));
