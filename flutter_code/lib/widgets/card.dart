@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomCard extends StatelessWidget{
 
@@ -27,15 +28,15 @@ class CustomCard extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(this.title),
-                SizedBox(height: 4,),
-                Text(this.description),
-                SizedBox(height: 4,),
+                Text(this.title, style: GoogleFonts.quicksand(fontSize: 16, fontWeight: FontWeight.w800),),
+                SizedBox(height: 8),
+                Text(this.description, style: GoogleFonts.quicksand(fontSize: 13, fontWeight: FontWeight.w500),),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(this.date),
-                    Text(this.price + " kn"),
+                    Text(this.date, style: GoogleFonts.quicksand(fontSize: 13, fontWeight: FontWeight.w500),),
+                    Text(this.price + " kn", style: GoogleFonts.quicksand(fontSize: 20, fontWeight: FontWeight.w800),),
                   ],
                 ),
               ],
