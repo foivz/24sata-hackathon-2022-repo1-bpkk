@@ -37,6 +37,5 @@ void main() async {
     price = ((1.8 - subd / 250) * price).ceil();
     var thetime = nicetime.subtract(Duration(days: subd));
     await hr.newReceipt(tag, oupis, price, itemovi, time: thetime);
-    print(i);
   }
 }
