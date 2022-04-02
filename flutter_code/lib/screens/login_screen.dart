@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:social_login_all/enums/buttons.dart';
-import 'package:social_login_all/social_login.dart';
-import 'package:social_login_all/widgets/button_components.dart';
 
 import '../custom_colors.dart';
 

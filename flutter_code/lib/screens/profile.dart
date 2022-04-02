@@ -22,7 +22,10 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Profil", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600 ),),
+        backgroundColor: CustomColor().mainColor,
+      ),
       body: Column(
         children: [
           SizedBox(height: 64,),
@@ -43,6 +46,9 @@ class _Profile extends State<Profile> {
                     height: 64,
                     child:
                     ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(CustomColor().mainColor),
+                      ),
                       onPressed: () {
                         return;
                       },
