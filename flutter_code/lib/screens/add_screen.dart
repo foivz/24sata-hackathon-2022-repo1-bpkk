@@ -28,6 +28,8 @@ class _DodajTrosak extends State<DodajTrosak>{
     int _currentIndex = 1;
     TextEditingController _titleController = TextEditingController();
     TextEditingController _priceController = TextEditingController();
+    TextEditingController _articlecontroller = TextEditingController();
+
 
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
       setState(() {
@@ -59,45 +61,103 @@ class _DodajTrosak extends State<DodajTrosak>{
     return Scaffold(
       appBar: AppBar(),
       body:
-      Column(
-        children: [
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
-                  child: DropdownButtonFormField<int>(
-                    value: widget.dropdownvalue,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: categoryList,
-                    onChanged: (newValue) {
-                      setState(() {
-                        widget.dropdownvalue = newValue!;
-                        print(newValue);
-                      });
-                    },
-                    decoration: InputDecoration(
-                      enabled: true,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CustomColor().mainColor,
-                          width: 2,
-                          style: BorderStyle.solid,
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+                    child: DropdownButtonFormField<int>(
+                      value: widget.dropdownvalue,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: categoryList,
+                      onChanged: (newValue) {
+                        setState(() {
+                          widget.dropdownvalue = newValue!;
+                          print(newValue);
+                        });
+                      },
+                      decoration: InputDecoration(
+                        enabled: true,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: CustomColor().mainColor,
+                            width: 2,
+                            style: BorderStyle.solid,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    width: 128,
+                    child:  TextFormField(
+                      controller: _titleController,
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
+                        ),
+                        hintText: "Opis kupnje",
+                        helperMaxLines: 128,
+                        hintStyle: GoogleFonts.quicksand(
+                          textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8,),
+            Container(
+              padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+              child: TextFormField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
+                  ),
+                  hintText: "Opis kupnje",
+                  helperMaxLines: 128,
+                  hintStyle: GoogleFonts.quicksand(
+                    textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
+                  ),
+                ),
               ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  width: 128,
+            ),
+            Container(
+              width: 256,
+              child: SfDateRangePicker(
+                onSelectionChanged: _onSelectionChanged,
+                selectionMode: DateRangePickerSelectionMode.single,
+                initialSelectedRange: PickerDateRange(
+                    DateTime.now().subtract(const Duration(days: 4)),
+                    DateTime.now().add(const Duration(days: 3))),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 256,
+                  padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
                   child: TextFormField(
-                    controller: _titleController,
+                    controller: _articlecontroller,
                     decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
@@ -105,7 +165,7 @@ class _DodajTrosak extends State<DodajTrosak>{
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
                       ),
-                      hintText: "Cijena",
+                      hintText: "Ime artikla",
                       helperMaxLines: 128,
                       hintStyle: GoogleFonts.quicksand(
                         textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
@@ -113,40 +173,20 @@ class _DodajTrosak extends State<DodajTrosak>{
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8,),
-          Container(
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
-            child: TextFormField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
+                Container(
+                  height: 48,
+                  child: FloatingActionButton(
+                    heroTag: "nesto",
+                    child: Icon(Icons.add_card),
+                    onPressed: () {
+
+                    },
+                  ),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
-                ),
-                hintText: "Opis kupnje",
-                helperMaxLines: 128,
-                hintStyle: GoogleFonts.quicksand(
-                  textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
-                ),
-              ),
+              ],
             ),
-          ),
-          Container(
-            width: 256,
-            child: SfDateRangePicker(
-              onSelectionChanged: _onSelectionChanged,
-              selectionMode: DateRangePickerSelectionMode.single,
-              initialSelectedRange: PickerDateRange(
-                  DateTime.now().subtract(const Duration(days: 4)),
-                  DateTime.now().add(const Duration(days: 3))),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
