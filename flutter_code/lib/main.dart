@@ -8,6 +8,7 @@ import 'widgets/card.dart';
 import 'screens/add_screen.dart';
 import 'screens/chart_history_screen.dart';
 import 'screens/chart_prediction_screen.dart';
+import 'screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        backgroundColor: CustomColor().mainColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -66,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColor().mainColor,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosak())).then((value) => setState(() {_currentIndex = 0;}));
         },
@@ -78,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _currentIndex = i;
 
           if (_currentIndex == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())).then((value) => setState(() {_currentIndex = 0;}));
           }
           else if (_currentIndex == 2){
             Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));

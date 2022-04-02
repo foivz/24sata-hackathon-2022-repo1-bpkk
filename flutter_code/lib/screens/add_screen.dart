@@ -59,7 +59,9 @@ class _DodajTrosak extends State<DodajTrosak>{
     ];
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: CustomColor().mainColor,
+      ),
       body:
       SingleChildScrollView(
         child: Column(
@@ -108,7 +110,7 @@ class _DodajTrosak extends State<DodajTrosak>{
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
                         ),
-                        hintText: "Opis kupnje",
+                        hintText: "Cijena",
                         helperMaxLines: 128,
                         hintStyle: GoogleFonts.quicksand(
                           textStyle: const TextStyle(fontSize:16, fontWeight: FontWeight.w400),
@@ -176,6 +178,7 @@ class _DodajTrosak extends State<DodajTrosak>{
                 Container(
                   height: 48,
                   child: FloatingActionButton(
+                    backgroundColor: CustomColor().mainColor,
                     heroTag: "nesto",
                     child: Icon(Icons.add_card),
                     onPressed: () {
@@ -189,6 +192,7 @@ class _DodajTrosak extends State<DodajTrosak>{
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColor().mainColor,
         onPressed: () {
             print((widget._selectedDate.split(" ")[0].split("-").reversed.join("/")));
           },
