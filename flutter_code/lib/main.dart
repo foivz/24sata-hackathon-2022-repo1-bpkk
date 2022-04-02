@@ -6,6 +6,7 @@ import 'custom_colors.dart';
 import 'widgets/card.dart';
 
 import 'screens/add_screen.dart';
+import 'screens/chart_history_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _currentIndex = i;
 
           if (_currentIndex == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DodajTrosak())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
 
           }
         }),
