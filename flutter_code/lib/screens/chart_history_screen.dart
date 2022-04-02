@@ -59,8 +59,8 @@ class _HistoryChart extends State<HistoryChart>{
         onTap: (i) => setState(() {
           _currentIndex = i;
 
-          if (_currentIndex == 1){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
+          if (_currentIndex == 0){
+            Navigator.pop(context);
 
           }
         }),
