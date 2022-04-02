@@ -150,7 +150,7 @@ class _DodajTrosak extends State<DodajTrosak>{
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-            print(widget._selectedDate.split(" ")[0].split("-").reversed);
+            print((widget._selectedDate.split(" ")[0].split("-").reversed.join("/")));
           },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
