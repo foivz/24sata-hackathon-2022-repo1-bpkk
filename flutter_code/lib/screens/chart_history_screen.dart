@@ -34,6 +34,7 @@ class _HistoryChart extends State<HistoryChart>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CustomColor().mainColor,
         title: Text("Povijest troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w800),),
       ),
       body: Column(
