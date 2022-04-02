@@ -26,47 +26,49 @@ class HTTPRequest {
   }
 
   Future<void> checkBoxes() async {
-    if(debug)return;
+    if (debug) return;
     tokenBox ??= await Hive.openBox("userToken");
     usernameBox ??= await Hive.openBox("username");
   }
 
-  Future<void> deleteBoxes() async{
-    if(debug)return;
-    await checkBoxes().then((value){
+  Future<void> deleteBoxes() async {
+    if (debug) return;
+    await checkBoxes().then((value) {
       tokenBox?.deleteAll(tokenBox!.keys);
       usernameBox?.deleteAll(usernameBox!.keys);
     });
   }
 
-  Future<Http.Response> _sendPostRequest({required endpoint, required dict, bool sendToken = false, int timeout = 4}) async {
+  Future<Http.Response> _sendPostRequest(
+      {required endpoint,
+      required dict,
+      bool sendToken = false,
+      int timeout = 4}) async {
     Map<String, String> newHeaders = HashMap();
     newHeaders['Accept'] = 'application/json';
     newHeaders['Content-type'] = 'application/json';
     if (sendToken) {
-      if(!debug) {
+      if (!debug) {
         if (tokenBox!.keys.contains("token")) {
           newHeaders['X-Token'] = tokenBox!.get("token");
-        }
-        else {
+        } else {
           /*Navigator.of(context!).popUntil((route) => route.isFirst);
         Navigator.pop(context!);
         Navigator.push(context!, MaterialPageRoute(
             builder: (context) => LoginPage()));  */
           print("yooo you dont have access");
         }
-      }else{
+      } else {
         newHeaders['X-Token'] = token;
       }
     }
 
-    var request = await Http.post(
-        Uri.parse(domain + endpoint),
+    var request = await Http.post(Uri.parse(domain + endpoint),
         headers: newHeaders,
         body: jsonEncode(dict),
-        encoding: Encoding.getByName('utf-8')
-    );
-    if(request.body == "Internal Server Error") return Http.Response(jsonEncode("Internal Server Error"), 500);
+        encoding: Encoding.getByName('utf-8'));
+    if (request.body == "Internal Server Error")
+      return Http.Response(jsonEncode("Internal Server Error"), 500);
     return request;
   }
 
@@ -75,16 +77,17 @@ class HTTPRequest {
     String endpoint = "/login/";
 
     Http.Response response = await _sendPostRequest(
-        endpoint: endpoint, dict: {"username": username, "passw": passwd}, timeout: 4);
+        endpoint: endpoint,
+        dict: {"username": username, "passw": passwd},
+        timeout: 4);
 
     await deleteBoxes();
 
     if (response.statusCode == 200) {
-
-      await checkBoxes().then((value){
-        if(debug){
+      await checkBoxes().then((value) {
+        if (debug) {
           token = jsonDecode(response.body)['token'];
-        }else {
+        } else {
           tokenBox!.put("token", jsonDecode(response.body)['token']);
           usernameBox!.put("username", username);
         }
@@ -96,27 +99,29 @@ class HTTPRequest {
     ];
   }
 
-
-  Future<List> registerRequest(String username, String email, String passwd, {int? fid}) async {
+  Future<List> registerRequest(String username, String email, String passwd,
+      {int? fid}) async {
     await checkBoxes();
 
     String endpoint = "/register/";
-    Http.Response response = await _sendPostRequest(endpoint: endpoint, dict: {
-      "username": username,
-      "passw": passwd,
-      "email": email,
-      "familyid": fid??0,
-    },
+    Http.Response response = await _sendPostRequest(
+      endpoint: endpoint,
+      dict: {
+        "username": username,
+        "passw": passwd,
+        "email": email,
+        "familyid": fid ?? 0,
+      },
       timeout: 5,
     );
 
     await deleteBoxes();
 
     if (response.statusCode == 200) {
-      await checkBoxes().then((value){
-        if(debug){
+      await checkBoxes().then((value) {
+        if (debug) {
           token = jsonDecode(response.body)['token'];
-        }else {
+        } else {
           tokenBox!.put("token", jsonDecode(response.body)['token']);
           usernameBox!.put("username", username);
         }
@@ -128,13 +133,12 @@ class HTTPRequest {
     ];
   }
 
-
   Future<List> logoutRequest() async {
     await checkBoxes();
 
     String endpoint = "/logout/";
     Http.Response response =
-    await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
+        await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
 
     await deleteBoxes();
 
@@ -144,39 +148,46 @@ class HTTPRequest {
     ];
   }
 
-  Future<List> newReceipt(String category, String description, int price, bool items, {DateTime time}) async {
+  Future<List> newReceipt(
+      String category, String description, int price, String items,
+      {DateTime? time}) async {
     await checkBoxes();
 
-    final DateFormat formatter = DateFormat('%Y-%m-%d %H:%M:%S');
+    final DateFormat formatter = DateFormat('yyyy-MM-ddTkk:mm:ss');
+    // print(formatter.format(time!));
 
-    String endpoint = "/new/";
-    Http.Response response = await _sendPostRequest(endpoint: endpoint, dict: {
-      "category": category,
-      "description": description,
-      "price": price,
-      "items": items,
-      "time": formatter.format(time),
-    }, sendToken: true);
+    String endpoint = "/add/";
+    Http.Response response = await _sendPostRequest(
+        endpoint: endpoint,
+        dict: {
+          "category": category,
+          "description": description,
+          "price": price,
+          "items": items.split(" "),
+          "time": time == null ? null : formatter.format(time),
+        },
+        sendToken: true);
     return [
       response.statusCode,
       jsonDecode(utf8.decode(response.body.codeUnits))
     ];
   }
-
 
   Future<List> getReceipts({int? fid}) async {
     await checkBoxes();
 
     String endpoint = "/getReceipts/";
-    Http.Response response = await _sendPostRequest(endpoint: endpoint, dict: {
-      "fid": fid,
-    }, sendToken: true);
+    Http.Response response = await _sendPostRequest(
+        endpoint: endpoint,
+        dict: {
+          "fid": fid,
+        },
+        sendToken: true);
     return [
       response.statusCode,
       jsonDecode(utf8.decode(response.body.codeUnits))
     ];
   }
-
 
   Future<List> setFid(int fid) async {
     await checkBoxes();
@@ -195,7 +206,7 @@ class HTTPRequest {
 
     String endpoint = "/checkToken/";
     Http.Response response =
-    await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
+        await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
     return [
       response.statusCode,
       jsonDecode(utf8.decode(response.body.codeUnits))
