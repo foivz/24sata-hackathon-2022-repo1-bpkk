@@ -43,7 +43,7 @@ class _HistoryChart extends State<HistoryChart>{
             margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
             primaryXAxis: CategoryAxis(),
             // Chart title
-            title: ChartTitle(text: 'Graf prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+            title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
             // Enable legend
             legend: Legend(isVisible: false),
             // Enable tooltip
@@ -67,7 +67,8 @@ class _HistoryChart extends State<HistoryChart>{
           if (_currentIndex == 0){
             Navigator.pop(context);
           }
-          else if (_currentIndex == 1){
+          else if (_currentIndex == 2){
+            Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart()));
           }
         }),
