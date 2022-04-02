@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_code/screens/chart_prediction_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../custom_colors.dart';
 
-import 'chart_prediction_screen.dart';
+import 'chart_history_screen.dart';
 
-class HistoryChart extends StatefulWidget{
+
+class PredictionChart extends StatefulWidget{
 
   @override
-  _HistoryChart createState() => _HistoryChart();
+  _PredictionChart createState() => _PredictionChart();
 }
 
-class _HistoryChart extends State<HistoryChart>{
-  int _currentIndex = 1;
+class _PredictionChart extends State<PredictionChart>{
+  int _currentIndex = 2;
 
   List<_SalesData> data = [
     _SalesData('Jan', 35),
@@ -33,32 +33,32 @@ class _HistoryChart extends State<HistoryChart>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Povijest troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w800),),
+        title: Text("Predikcije troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),),
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          //Initialize the chart widget
-          SfCartesianChart(
-            margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
-            primaryXAxis: CategoryAxis(),
-            // Chart title
-            title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-            // Enable legend
-            legend: Legend(isVisible: false),
-            // Enable tooltip
-            tooltipBehavior: TooltipBehavior(enable: false),
-            series: <ChartSeries<_SalesData, String>>[
-              SplineSeries<_SalesData, String>(
-                  dataSource: data,
-                  xValueMapper: (_SalesData sales, _) => sales.year,
-                  yValueMapper: (_SalesData sales, _) => sales.sales,
-                  name: "",
-                  // Enable data label
-                  dataLabelSettings: DataLabelSettings(isVisible: true))
-            ]
-          ),
-      ]),
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            //Initialize the chart widget
+            SfCartesianChart(
+                margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
+                primaryXAxis: CategoryAxis(),
+                // Chart title
+                title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                // Enable legend
+                legend: Legend(isVisible: false),
+                // Enable tooltip
+                tooltipBehavior: TooltipBehavior(enable: false),
+                series: <ChartSeries<_SalesData, String>>[
+                  SplineSeries<_SalesData, String>(
+                      dataSource: data,
+                      xValueMapper: (_SalesData sales, _) => sales.year,
+                      yValueMapper: (_SalesData sales, _) => sales.sales,
+                      name: "",
+                      // Enable data label
+                      dataLabelSettings: DataLabelSettings(isVisible: true))
+                ]
+            ),
+          ]),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: (i) => setState(() {
@@ -67,9 +67,9 @@ class _HistoryChart extends State<HistoryChart>{
           if (_currentIndex == 0){
             Navigator.pop(context);
           }
-          else if (_currentIndex == 2){
+          if (_currentIndex == 1){
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart()));
           }
         }),
         items: [
