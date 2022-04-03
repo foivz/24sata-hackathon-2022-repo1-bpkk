@@ -36,31 +36,36 @@ class _DodajTrosak extends State<DodajTrosak>{
 
 
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-      setState(() {
-        if (args.value is PickerDateRange) {
-          widget._range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-          // ignore: lines_longer_than_80_chars
-              ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-        } else if (args.value is DateTime) {
-          widget._selectedDate = args.value.toString();
-        } else if (args.value is List<DateTime>) {
-          widget._dateCount = args.value.length.toString();
-        } else {
-          widget._rangeCount = args.value.length.toString();
-        }
-      });
+
+      if (args.value is PickerDateRange) {
+        widget._range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+        // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        widget._selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        widget._dateCount = args.value.length.toString();
+      } else {
+        widget._rangeCount = args.value.length.toString();
+      }
+
     }
 
-    List<DropdownMenuItem<int>> categoryList = [
-      DropdownMenuItem(
-        child: Text("Hrana", style: GoogleFonts.quicksand(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey[600]),),
-        value: 0,
-      ),
-      DropdownMenuItem(
-        child: Text("Elektronika"),
-        value: 1,
-      ),
+    List<DropdownMenuItem<int>> categoryList = [ ];
+
+    List categories = [
+      "Hrana",
+      "Elektronika"
     ];
+
+    for(int i = 0; i < categories.length; i++){
+      categoryList.add(
+        DropdownMenuItem(
+          child: Text(categories[i]),
+          value: i,
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -93,10 +98,8 @@ class _DodajTrosak extends State<DodajTrosak>{
                       icon: const Icon(Icons.keyboard_arrow_down),
                       items: categoryList,
                       onChanged: (newValue) {
-                        setState(() {
-                          widget.dropdownvalue = newValue!;
-                          print(newValue);
-                        });
+                        widget.dropdownvalue = newValue!;
+                        print(newValue);
                       },
                       decoration: InputDecoration(
                         enabled: true,
@@ -116,6 +119,7 @@ class _DodajTrosak extends State<DodajTrosak>{
                     padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     width: 128,
                     child:  TextFormField(
+                      controller: _priceController,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: CustomColor().mainColor, width: 2),
@@ -212,7 +216,7 @@ class _DodajTrosak extends State<DodajTrosak>{
           var date = DateTime.parse(widget._selectedDate);
           if(date.hour == 0) date = date.subtract(Duration(minutes: 1));
           print("sending receipt");
-          await hr.newReceipt("cat", "description", 6566, ["tvoja mama"]);
+          await hr.newReceipt(_titleController.text, _titleController.text, int.parse(_priceController.text), ["tvoja mama"], time: date);
           Navigator.pop(context);
         
         },

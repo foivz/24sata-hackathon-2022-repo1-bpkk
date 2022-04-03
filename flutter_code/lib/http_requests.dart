@@ -248,4 +248,28 @@ class HTTPRequest {
       jsonDecode(utf8.decode(response.body.codeUnits))
     ];
   }
+
+  Future<List> predict() async {
+    await checkBoxes();
+
+    String endpoint = "/predict/";
+    Http.Response response =
+    await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
+    return [
+      response.statusCode,
+      jsonDecode(utf8.decode(response.body.codeUnits))
+    ];
+  }
+
+  Future<List> getGraph() async {
+    await checkBoxes();
+
+    String endpoint = "/getGraph/";
+    Http.Response response =
+    await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
+    return [
+      response.statusCode,
+      jsonDecode(utf8.decode(response.body.codeUnits))
+    ];
+  }
 }

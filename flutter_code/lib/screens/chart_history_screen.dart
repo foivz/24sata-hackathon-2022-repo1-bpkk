@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_code/http_requests.dart';
 import 'package:flutter_code/screens/chart_prediction_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -6,6 +7,7 @@ import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../custom_colors.dart';
 import 'profile.dart';
+import 'dart:math';
 
 import 'chart_prediction_screen.dart';
 
@@ -18,17 +20,60 @@ class HistoryChart extends StatefulWidget{
 class _HistoryChart extends State<HistoryChart>{
   int _currentIndex = 1;
 
+  var rng = Random();
+
   List<_SalesData> data = [
-    _SalesData('Jan', 35),
-    _SalesData('Feb', 5),
-    _SalesData('Mar', 15),
-    _SalesData('Apr', 32),
-    _SalesData('May', 31),
-    _SalesData('Jun', 6),
-    _SalesData('Jul', 9),
-    _SalesData('Aug', 11),
-    _SalesData('Sep', 5),
+    _SalesData(1, 35),
+    _SalesData(2, 5),
+    _SalesData(3, 15),
+    _SalesData(4, 32),
+    _SalesData(5, 31),
+    _SalesData(6, 6),
+    _SalesData(7, 9),
+    _SalesData(8, 11),
+    _SalesData(9, 5),
   ];
+
+  List<_SalesData> data2 = [
+    _SalesData(1, 35),
+    _SalesData(2, 5),
+    _SalesData(3, 15),
+    _SalesData(4, 32),
+    _SalesData(5, 31),
+    _SalesData(6, 6),
+    _SalesData(7, 9),
+    _SalesData(8, 11),
+    _SalesData(9, 5),
+  ];
+
+  HTTPRequest hr = HTTPRequest();
+
+  void initState(){
+    super.initState();
+    hr.predict().then((value) {
+      setState(() {
+      data.clear();
+      for(int i = 0; i < value[1].length; i++){
+        data.add(
+          _SalesData(i, value[1][i]+(rng.nextInt(200)-100)),
+        );
+      }
+      print(data);
+      });
+    });
+
+    hr.getGraph().then((value){
+      setState(() {
+        data2.clear();
+        for(int i = 0; i < value[1].length; i++){
+          data2.add(
+            _SalesData(i, value[1][i]+(rng.nextInt(200)-100)),
+          );
+        }
+        print(data2);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,56 +100,72 @@ class _HistoryChart extends State<HistoryChart>{
                 children: [
                   //Initialize the chart widget
                   Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)
                       ),
                       child: SfCartesianChart(
-                          margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
-                          primaryXAxis: CategoryAxis(),
+                          margin: EdgeInsets.fromLTRB(8, 8, 8, 24),
+                          primaryXAxis: CategoryAxis(
+                            isVisible: false,
+                          ),
+                          primaryYAxis: CategoryAxis(
+                            minimum: 20,
+                            visibleMinimum: 0
+                          ),
                           // Chart title
                           title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
                           // Enable legend
                           legend: Legend(isVisible: false),
                           // Enable tooltip
                           tooltipBehavior: TooltipBehavior(enable: false),
-                          series: <ChartSeries<_SalesData, String>>[
-                            SplineSeries<_SalesData, String>(
-                                dataSource: data,
-                                xValueMapper: (_SalesData sales, _) => sales.year,
+                          series: <ChartSeries<_SalesData, int>>[
+                            SplineSeries<_SalesData, int>(
+                                dataSource: data2,
+                                xValueMapper: (_SalesData sales, _) => sales.time,
                                 yValueMapper: (_SalesData sales, _) => sales.sales,
                                 name: "",
                                 // Enable data label
-                                dataLabelSettings: DataLabelSettings(isVisible: true))
+                                dataLabelSettings: DataLabelSettings(isVisible: false))
                           ]
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16)
                       ),
                       child: SfCartesianChart(
-                          margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
-                          primaryXAxis: CategoryAxis(),
+                          margin: const EdgeInsets.fromLTRB(8, 8, 8, 24),
+                          primaryXAxis: CategoryAxis(
+                            isVisible: false,
+                          ),
                           // Chart title
                           title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
                           // Enable legend
                           legend: Legend(isVisible: false),
                           // Enable tooltip
                           tooltipBehavior: TooltipBehavior(enable: false),
-                          series: <ChartSeries<_SalesData, String>>[
-                            SplineSeries<_SalesData, String>(
-                                dataSource: data,
-                                xValueMapper: (_SalesData sales, _) => sales.year,
+                          series: <ChartSeries<_SalesData, int>>[
+                            SplineSeries<_SalesData, int>(
+                                dataSource: data.sublist(0, 7),
+                                xValueMapper: (_SalesData sales, _) => sales.time,
                                 yValueMapper: (_SalesData sales, _) => sales.sales,
                                 name: "",
                                 // Enable data label
-                                dataLabelSettings: DataLabelSettings(isVisible: true))
-                          ]
+                                dataLabelSettings: const DataLabelSettings(isVisible: false)),
+                            SplineSeries<_SalesData, int>(
+                                dataSource: data.sublist(6),
+                                xValueMapper: (_SalesData sales, _) => sales.time,
+                                yValueMapper: (_SalesData sales, _) => sales.sales,
+                                name: "",
+                                color: Colors.red,
+                                // Enable data label
+                                dataLabelSettings: const DataLabelSettings(isVisible: false))
+                          ],
                       ),
                     ),
                   ),
@@ -157,8 +218,8 @@ class _HistoryChart extends State<HistoryChart>{
 }
 
 class _SalesData {
-  _SalesData(this.year, this.sales);
+  _SalesData(this.time, this.sales);
 
-  final String year;
-  final double sales;
+  final int time;
+  final int sales;
 }
