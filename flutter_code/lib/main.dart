@@ -95,13 +95,27 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: CustomColor().mainColor,
       ),
       body: Center(
-        child: SingleChildScrollView(
-          child:
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: cards,
-          ),
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height-64,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: ClipRect(
+                  child: Image.asset('images/wallpaper.png'),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child:
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: cards,
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

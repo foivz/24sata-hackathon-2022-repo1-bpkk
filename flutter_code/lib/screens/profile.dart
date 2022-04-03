@@ -55,10 +55,6 @@ class _Profile extends State<Profile> {
                     child: Text("Boris Španić", style: GoogleFonts.quicksand(fontSize: 40, fontWeight: FontWeight.w800,),),
                     width: MediaQuery.of(context).size.width,
                   ),
-                  /*Container(
-                    margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Divider(color: CustomColor().mainColor, thickness: 4,),
-                  ),*/
                   Container(
                     margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child:

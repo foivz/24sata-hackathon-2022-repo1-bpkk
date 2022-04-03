@@ -37,49 +37,64 @@ class _HistoryChart extends State<HistoryChart>{
         backgroundColor: CustomColor().mainColor,
         title: Text("Povijest troškova", style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w800),),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
+      body: Stack(
         children: [
-          //Initialize the chart widget
-          SfCartesianChart(
-            margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
-            primaryXAxis: CategoryAxis(),
-            // Chart title
-            title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-            // Enable legend
-            legend: Legend(isVisible: false),
-            // Enable tooltip
-            tooltipBehavior: TooltipBehavior(enable: false),
-            series: <ChartSeries<_SalesData, String>>[
-              SplineSeries<_SalesData, String>(
-                dataSource: data,
-                xValueMapper: (_SalesData sales, _) => sales.year,
-                yValueMapper: (_SalesData sales, _) => sales.sales,
-                name: "",
-                // Enable data label
-                dataLabelSettings: DataLabelSettings(isVisible: true))
+          /*Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height-64,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: ClipRect(
+                child: Image.asset('images/wallpaper.png'),
+              ),
+            ),
+          ),*/
+          Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //Initialize the chart widget
+                SfCartesianChart(
+                  margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
+                  primaryXAxis: CategoryAxis(),
+                  // Chart title
+                  title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                  // Enable legend
+                  legend: Legend(isVisible: false),
+                  // Enable tooltip
+                  tooltipBehavior: TooltipBehavior(enable: false),
+                  series: <ChartSeries<_SalesData, String>>[
+                    SplineSeries<_SalesData, String>(
+                      dataSource: data,
+                      xValueMapper: (_SalesData sales, _) => sales.year,
+                      yValueMapper: (_SalesData sales, _) => sales.sales,
+                      name: "",
+                      // Enable data label
+                      dataLabelSettings: DataLabelSettings(isVisible: true))
+                  ]
+                ),
+                SfCartesianChart(
+                  margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
+                  primaryXAxis: CategoryAxis(),
+                  // Chart title
+                  title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                  // Enable legend
+                  legend: Legend(isVisible: false),
+                  // Enable tooltip
+                  tooltipBehavior: TooltipBehavior(enable: false),
+                  series: <ChartSeries<_SalesData, String>>[
+                    SplineSeries<_SalesData, String>(
+                      dataSource: data,
+                      xValueMapper: (_SalesData sales, _) => sales.year,
+                      yValueMapper: (_SalesData sales, _) => sales.sales,
+                      name: "",
+                      // Enable data label
+                      dataLabelSettings: DataLabelSettings(isVisible: true))
+                  ]
+              ),
             ]
           ),
-          SfCartesianChart(
-            margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
-            primaryXAxis: CategoryAxis(),
-            // Chart title
-            title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-            // Enable legend
-            legend: Legend(isVisible: false),
-            // Enable tooltip
-            tooltipBehavior: TooltipBehavior(enable: false),
-            series: <ChartSeries<_SalesData, String>>[
-              SplineSeries<_SalesData, String>(
-                dataSource: data,
-                xValueMapper: (_SalesData sales, _) => sales.year,
-                yValueMapper: (_SalesData sales, _) => sales.sales,
-                name: "",
-                // Enable data label
-                dataLabelSettings: DataLabelSettings(isVisible: true))
-            ]
-          ),
-      ]),
+        ],
+      ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: (i) => setState(() {
