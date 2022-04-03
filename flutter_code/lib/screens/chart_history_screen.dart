@@ -39,7 +39,7 @@ class _HistoryChart extends State<HistoryChart>{
       ),
       body: Stack(
         children: [
-          /*Container(
+          Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height-64,
             child: FittedBox(
@@ -48,50 +48,68 @@ class _HistoryChart extends State<HistoryChart>{
                 child: Image.asset('images/wallpaper.png'),
               ),
             ),
-          ),*/
-          Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //Initialize the chart widget
-                SfCartesianChart(
-                  margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
-                  primaryXAxis: CategoryAxis(),
-                  // Chart title
-                  title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-                  // Enable legend
-                  legend: Legend(isVisible: false),
-                  // Enable tooltip
-                  tooltipBehavior: TooltipBehavior(enable: false),
-                  series: <ChartSeries<_SalesData, String>>[
-                    SplineSeries<_SalesData, String>(
-                      dataSource: data,
-                      xValueMapper: (_SalesData sales, _) => sales.year,
-                      yValueMapper: (_SalesData sales, _) => sales.sales,
-                      name: "",
-                      // Enable data label
-                      dataLabelSettings: DataLabelSettings(isVisible: true))
-                  ]
-                ),
-                SfCartesianChart(
-                  margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
-                  primaryXAxis: CategoryAxis(),
-                  // Chart title
-                  title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-                  // Enable legend
-                  legend: Legend(isVisible: false),
-                  // Enable tooltip
-                  tooltipBehavior: TooltipBehavior(enable: false),
-                  series: <ChartSeries<_SalesData, String>>[
-                    SplineSeries<_SalesData, String>(
-                      dataSource: data,
-                      xValueMapper: (_SalesData sales, _) => sales.year,
-                      yValueMapper: (_SalesData sales, _) => sales.sales,
-                      name: "",
-                      // Enable data label
-                      dataLabelSettings: DataLabelSettings(isVisible: true))
-                  ]
-              ),
-            ]
+          ),
+          SingleChildScrollView(
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //Initialize the chart widget
+                  Container(
+                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: SfCartesianChart(
+                          margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
+                          primaryXAxis: CategoryAxis(),
+                          // Chart title
+                          title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                          // Enable legend
+                          legend: Legend(isVisible: false),
+                          // Enable tooltip
+                          tooltipBehavior: TooltipBehavior(enable: false),
+                          series: <ChartSeries<_SalesData, String>>[
+                            SplineSeries<_SalesData, String>(
+                                dataSource: data,
+                                xValueMapper: (_SalesData sales, _) => sales.year,
+                                yValueMapper: (_SalesData sales, _) => sales.sales,
+                                name: "",
+                                // Enable data label
+                                dataLabelSettings: DataLabelSettings(isVisible: true))
+                          ]
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: SfCartesianChart(
+                          margin: EdgeInsets.fromLTRB(8, 8, 8, 0),
+                          primaryXAxis: CategoryAxis(),
+                          // Chart title
+                          title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                          // Enable legend
+                          legend: Legend(isVisible: false),
+                          // Enable tooltip
+                          tooltipBehavior: TooltipBehavior(enable: false),
+                          series: <ChartSeries<_SalesData, String>>[
+                            SplineSeries<_SalesData, String>(
+                                dataSource: data,
+                                xValueMapper: (_SalesData sales, _) => sales.year,
+                                yValueMapper: (_SalesData sales, _) => sales.sales,
+                                name: "",
+                                // Enable data label
+                                dataLabelSettings: DataLabelSettings(isVisible: true))
+                          ]
+                      ),
+                    ),
+                  ),
+                ]
+            ),
           ),
         ],
       ),

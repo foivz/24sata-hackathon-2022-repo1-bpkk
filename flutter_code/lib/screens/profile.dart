@@ -52,7 +52,7 @@ class _Profile extends State<Profile> {
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 16, 0, 16),
                     alignment: Alignment.center,
-                    child: Text("Boris Španić", style: GoogleFonts.quicksand(fontSize: 40, fontWeight: FontWeight.w800,),),
+                    child: Text("David Vodopija", style: GoogleFonts.quicksand(fontSize: 40, fontWeight: FontWeight.w800,),),
                     width: MediaQuery.of(context).size.width,
                   ),
                   Container(
