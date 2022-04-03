@@ -46,6 +46,18 @@ class _HistoryChart extends State<HistoryChart>{
     _SalesData(9, 5),
   ];
 
+  List<_PieData> data3 = [
+    _PieData("cat0", 1, "35"),
+    _PieData("cat1", 2, "5"),
+    _PieData("cat2", 3, "8"),
+    _PieData("cat3", 4, "15"),
+    _PieData("cat4", 5, "19"),
+    _PieData("cat5", 6, "7"),
+    _PieData("cat6", 7, "10"),
+    _PieData("cat7", 8, "24"),
+    _PieData("cat8", 9, "32"),
+  ];
+
   HTTPRequest hr = HTTPRequest();
 
   void initState(){
@@ -96,80 +108,102 @@ class _HistoryChart extends State<HistoryChart>{
           ),
           SingleChildScrollView(
             child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  //Initialize the chart widget
-                  Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: SfCartesianChart(
-                          margin: EdgeInsets.fromLTRB(8, 8, 8, 24),
-                          primaryXAxis: CategoryAxis(
-                            isVisible: false,
-                          ),
-                          primaryYAxis: CategoryAxis(
-                            minimum: 20,
-                            visibleMinimum: 0
-                          ),
-                          // Chart title
-                          title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-                          // Enable legend
-                          legend: Legend(isVisible: false),
-                          // Enable tooltip
-                          tooltipBehavior: TooltipBehavior(enable: false),
-                          series: <ChartSeries<_SalesData, int>>[
-                            SplineSeries<_SalesData, int>(
-                                dataSource: data2,
-                                xValueMapper: (_SalesData sales, _) => sales.time,
-                                yValueMapper: (_SalesData sales, _) => sales.sales,
-                                name: "",
-                                // Enable data label
-                                dataLabelSettings: DataLabelSettings(isVisible: false))
-                          ]
-                      ),
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                //Initialize the chart widget
+                Container(
+                  margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)
+                    ),
+                    child: SfCartesianChart(
+                        margin: EdgeInsets.fromLTRB(8, 8, 8, 24),
+                        primaryXAxis: CategoryAxis(
+                          isVisible: false,
+                        ),
+                        primaryYAxis: CategoryAxis(
+                          minimum: 20,
+                          visibleMinimum: 0
+                        ),
+                        // Chart title
+                        title: ChartTitle(text: 'Prikaz prijašnjih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                        // Enable legend
+                        legend: Legend(isVisible: false),
+                        // Enable tooltip
+                        tooltipBehavior: TooltipBehavior(enable: false),
+                        series: <ChartSeries<_SalesData, int>>[
+                          SplineSeries<_SalesData, int>(
+                              dataSource: data2,
+                              xValueMapper: (_SalesData sales, _) => sales.time,
+                              yValueMapper: (_SalesData sales, _) => sales.sales,
+                              name: "",
+                              // Enable data label
+                              dataLabelSettings: DataLabelSettings(isVisible: false))
+                        ]
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)
-                      ),
-                      child: SfCartesianChart(
-                          margin: const EdgeInsets.fromLTRB(8, 8, 8, 24),
-                          primaryXAxis: CategoryAxis(
-                            isVisible: false,
-                          ),
-                          // Chart title
-                          title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
-                          // Enable legend
-                          legend: Legend(isVisible: false),
-                          // Enable tooltip
-                          tooltipBehavior: TooltipBehavior(enable: false),
-                          series: <ChartSeries<_SalesData, int>>[
-                            SplineSeries<_SalesData, int>(
-                                dataSource: data.sublist(0, 7),
-                                xValueMapper: (_SalesData sales, _) => sales.time,
-                                yValueMapper: (_SalesData sales, _) => sales.sales,
-                                name: "",
-                                // Enable data label
-                                dataLabelSettings: const DataLabelSettings(isVisible: false)),
-                            SplineSeries<_SalesData, int>(
-                                dataSource: data.sublist(6),
-                                xValueMapper: (_SalesData sales, _) => sales.time,
-                                yValueMapper: (_SalesData sales, _) => sales.sales,
-                                name: "",
-                                color: Colors.red,
-                                // Enable data label
-                                dataLabelSettings: const DataLabelSettings(isVisible: false))
-                          ],
-                      ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)
+                    ),
+                    child: SfCartesianChart(
+                        margin: const EdgeInsets.fromLTRB(8, 8, 8, 24),
+                        primaryXAxis: CategoryAxis(
+                          isVisible: false,
+                        ),
+                        // Chart title
+                        title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+                        // Enable legend
+                        legend: Legend(isVisible: false),
+                        // Enable tooltip
+                        tooltipBehavior: TooltipBehavior(enable: false),
+                        series: <ChartSeries<_SalesData, int>>[
+                          SplineSeries<_SalesData, int>(
+                              dataSource: data.sublist(0, 7),
+                              xValueMapper: (_SalesData sales, _) => sales.time,
+                              yValueMapper: (_SalesData sales, _) => sales.sales,
+                              name: "",
+                              // Enable data label
+                              dataLabelSettings: const DataLabelSettings(isVisible: false)),
+                          SplineSeries<_SalesData, int>(
+                              dataSource: data.sublist(6),
+                              xValueMapper: (_SalesData sales, _) => sales.time,
+                              yValueMapper: (_SalesData sales, _) => sales.sales,
+                              name: "",
+                              color: Colors.red,
+                              // Enable data label
+                              dataLabelSettings: const DataLabelSettings(isVisible: false))
+                        ],
                     ),
                   ),
-                ]
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)
+                    ),
+                    child: SfCircularChart(
+                        title: ChartTitle(text: 'Potrošnja po kategorijama'),
+                        legend: Legend(isVisible: true),
+                        series: <PieSeries<_PieData, String>>[
+                          PieSeries<_PieData, String>(
+                              explode: true,
+                              explodeIndex: 0,
+                              dataSource: data3,
+                              xValueMapper: (_PieData data, _) => data.xData,
+                              yValueMapper: (_PieData data, _) => data.yData,
+                              dataLabelMapper: (_PieData data, _) => data.text,
+                              dataLabelSettings: DataLabelSettings(isVisible: true)),
+                        ]
+                    )
+                  ),
+                ),
+              ]
             ),
           ),
         ],
@@ -222,4 +256,11 @@ class _SalesData {
 
   final int time;
   final int sales;
+}
+
+class _PieData {
+  _PieData(this.xData, this.yData, this.text);
+  final String xData;
+  final num yData;
+  final String text;
 }

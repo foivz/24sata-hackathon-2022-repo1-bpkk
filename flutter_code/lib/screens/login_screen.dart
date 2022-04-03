@@ -143,6 +143,26 @@ class _LoginPage extends State<LoginPage>{
                   ),
                 ),
               ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 4, 0, 8),
+              child:ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                onPressed: () {},
+                child: Container(
+                  width: 128+64,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(height: 40, child: Image.asset("images/google_icon.png", fit: BoxFit.contain,),),
+                      Text("Google Login", style: TextStyle(color: Colors.black),),
+                    ],
+                  ),
+                ),
+              ),
             )
           ],
         ),
