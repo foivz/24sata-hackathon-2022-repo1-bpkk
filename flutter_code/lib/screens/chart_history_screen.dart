@@ -48,14 +48,12 @@ class _HistoryChart extends State<HistoryChart>{
 
   List<_PieData> data3 = [
     _PieData("Putovanja", 1, "35"),
-    _PieData("Shopping", 2, "5"),
-    _PieData("Pokloni", 3, "8"),
-    _PieData("Hrana", 4, "15"),
-    _PieData("Gorivo", 5, "19"),
-    _PieData("Sport", 6, "7"),
-    _PieData("Ostalo", 7, "10"),
-    _PieData("Bijela Tehnika", 8, "24"),
-    _PieData("Higijena", 9, "32"),
+    _PieData("Pokloni", 2, "8"),
+    _PieData("Hrana", 3, "15"),
+    _PieData("Gorivo", 4, "19"),
+    _PieData("Sport", 5, "7"),
+    _PieData("Ostalo", 6, "10"),
+    _PieData("Higijena", 7, "32"),
   ];
 
   HTTPRequest hr = HTTPRequest();
@@ -77,11 +75,12 @@ class _HistoryChart extends State<HistoryChart>{
     hr.getGraph().then((value){
       setState(() {
         data2.clear();
-        for(int i = 0; i < value[1].length; i++){
+        for(int i = 0; i < 30; i++){
           data2.add(
             _SalesData(i, value[1][i]+(rng.nextInt(200)-100)),
           );
         }
+
         print(data2);
       });
     });
