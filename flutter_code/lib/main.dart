@@ -17,6 +17,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'screens/login_screen.dart';
 import 'screens/profile.dart';
+import 'screens/wishlist_screen.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -141,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }));
           }
           else if (_currentIndex == 2){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist())).then((value) => setState(() {
               _currentIndex = 0;
               getCards();
             }));

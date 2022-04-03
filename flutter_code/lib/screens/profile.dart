@@ -9,6 +9,7 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 
 import 'chart_history_screen.dart';
 import 'wishlist_screen.dart';
+import 'digital_wallet.dart';
 
 
 class Profile extends StatefulWidget {
@@ -70,7 +71,7 @@ class _Profile extends State<Profile> {
                               backgroundColor: MaterialStateProperty.all(CustomColor().mainColor),
                             ),
                             onPressed: () {
-                              return;
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DigitalWalletPage()));
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
