@@ -52,12 +52,31 @@ class _HistoryChart extends State<HistoryChart>{
             tooltipBehavior: TooltipBehavior(enable: false),
             series: <ChartSeries<_SalesData, String>>[
               SplineSeries<_SalesData, String>(
-                  dataSource: data,
-                  xValueMapper: (_SalesData sales, _) => sales.year,
-                  yValueMapper: (_SalesData sales, _) => sales.sales,
-                  name: "",
-                  // Enable data label
-                  dataLabelSettings: DataLabelSettings(isVisible: true))
+                dataSource: data,
+                xValueMapper: (_SalesData sales, _) => sales.year,
+                yValueMapper: (_SalesData sales, _) => sales.sales,
+                name: "",
+                // Enable data label
+                dataLabelSettings: DataLabelSettings(isVisible: true))
+            ]
+          ),
+          SfCartesianChart(
+            margin: EdgeInsets.fromLTRB(8, 32, 32, 0),
+            primaryXAxis: CategoryAxis(),
+            // Chart title
+            title: ChartTitle(text: 'Predikcija budućih troškova', textStyle: GoogleFonts.quicksand(fontWeight: FontWeight.w500)),
+            // Enable legend
+            legend: Legend(isVisible: false),
+            // Enable tooltip
+            tooltipBehavior: TooltipBehavior(enable: false),
+            series: <ChartSeries<_SalesData, String>>[
+              SplineSeries<_SalesData, String>(
+                dataSource: data,
+                xValueMapper: (_SalesData sales, _) => sales.year,
+                yValueMapper: (_SalesData sales, _) => sales.sales,
+                name: "",
+                // Enable data label
+                dataLabelSettings: DataLabelSettings(isVisible: true))
             ]
           ),
       ]),
@@ -68,10 +87,6 @@ class _HistoryChart extends State<HistoryChart>{
 
           if (_currentIndex == 0){
             Navigator.pop(context);
-          }
-          else if (_currentIndex == 2){
-            Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart()));
           }
           else if (_currentIndex == 3){
             Navigator.pop(context);
@@ -86,21 +101,20 @@ class _HistoryChart extends State<HistoryChart>{
             title: Text("Troškovi"),
             selectedColor: CustomColor().mainColor,
           ),
-
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.analytics_outlined,),
+            icon: Icon(Icons.insights_outlined,),
             title: Text("Potrošnja"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.insights_outlined),
-            title: Text("Predikcija"),
+            icon: Icon(Icons.checklist_outlined),
+            title: Text("Lista"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
             icon: Icon(Icons.account_circle_outlined),
-            title: Text("Predikcija"),
+            title: Text("Profil"),
             selectedColor: CustomColor().mainColor,
           ),
         ],

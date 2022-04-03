@@ -146,6 +146,8 @@ class _DodajTrosak extends State<DodajTrosak>{
               child: SfDateRangePicker(
                 onSelectionChanged: _onSelectionChanged,
                 selectionMode: DateRangePickerSelectionMode.single,
+                selectionColor: CustomColor().mainColor,
+                todayHighlightColor: CustomColor().mainColor,
                 initialSelectedRange: PickerDateRange(
                     DateTime.now().subtract(const Duration(days: 4)),
                     DateTime.now().add(const Duration(days: 3))),

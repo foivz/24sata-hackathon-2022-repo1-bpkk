@@ -10,6 +10,7 @@ import 'screens/chart_history_screen.dart';
 import 'screens/chart_prediction_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/profile.dart';
+import 'screens/wishlist_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,25 +50,37 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: CustomColor().mainColor,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child:
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-              CustomCard("Naslov", "Opis troska", "Datum", "2000"),
-            ],
-          ),
+      body: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height-64,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: ClipRect(
+                  child: Image.asset('images/wallpaper.png'),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child:
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                  CustomCard("Naslov", "Opis troska", "Datum", "2000"),
+                ],
+              ),
+            ),
+          ],
         ),
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CustomColor().mainColor,
         onPressed: () {
@@ -85,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryChart())).then((value) => setState(() {_currentIndex = 0;}));
           }
           else if (_currentIndex == 2){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => PredictionChart())).then((value) => setState(() {_currentIndex = 0;}));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist())).then((value) => setState(() {_currentIndex = 0;}));
           }
           else if (_currentIndex == 3){
             Navigator.push(context, MaterialPageRoute(builder: (context) => Profile())).then((value) => setState(() {_currentIndex = 0;}));
@@ -100,13 +113,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.analytics_outlined,),
-            title: Text("Potrošnja"),
+            icon: Icon(Icons.insights_outlined),
+            title: Text("Predikcija"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.insights_outlined),
-            title: Text("Predikcija"),
+            icon: Icon(Icons.checklist_outlined),
+            title: Text("Lista"),
             selectedColor: CustomColor().mainColor,
           ),
           SalomonBottomBarItem(
