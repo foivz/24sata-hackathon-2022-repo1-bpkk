@@ -137,6 +137,8 @@ class _HistoryChart extends State<HistoryChart>{
                               xValueMapper: (_SalesData sales, _) => sales.time,
                               yValueMapper: (_SalesData sales, _) => sales.sales,
                               name: "",
+                              color: CustomColor().mainColor,
+                              width: 5,
                               // Enable data label
                               dataLabelSettings: DataLabelSettings(isVisible: false))
                         ]
@@ -166,6 +168,8 @@ class _HistoryChart extends State<HistoryChart>{
                               xValueMapper: (_SalesData sales, _) => sales.time,
                               yValueMapper: (_SalesData sales, _) => sales.sales,
                               name: "",
+                              width: 5,
+                              color: CustomColor().mainColor,
                               // Enable data label
                               dataLabelSettings: const DataLabelSettings(isVisible: false)),
                           SplineSeries<_SalesData, int>(
@@ -173,7 +177,8 @@ class _HistoryChart extends State<HistoryChart>{
                               xValueMapper: (_SalesData sales, _) => sales.time,
                               yValueMapper: (_SalesData sales, _) => sales.sales,
                               name: "",
-                              color: Colors.red,
+                              width: 5,
+                              color: Colors.blueGrey,
                               // Enable data label
                               dataLabelSettings: const DataLabelSettings(isVisible: false))
                         ],

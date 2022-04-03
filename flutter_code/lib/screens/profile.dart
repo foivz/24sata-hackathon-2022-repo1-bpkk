@@ -7,10 +7,12 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../custom_colors.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 
+import 'ad.dart';
 import 'chart_history_screen.dart';
 import 'wishlist_screen.dart';
 import 'digital_wallet.dart';
 
+double vodaToken = 0.0;
 
 class Profile extends StatefulWidget {
 
@@ -114,6 +116,24 @@ class _Profile extends State<Profile> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(16, 40, 16, 40),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                vodaToken+=0.005;
+                                vodaToken = double.parse(vodaToken.toStringAsFixed(3));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AdPage()));
+                              });
+                            },
+                            child: Text("Voda token: $vodaToken", style: GoogleFonts.quicksand(fontSize: 30, fontWeight: FontWeight.w800,)),
+                          ),
+                        ],
                     ),
                   ),
                 ],
