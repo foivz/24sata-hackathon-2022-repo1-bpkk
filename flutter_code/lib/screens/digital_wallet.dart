@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../custom_colors.dart';
 import 'package:awesome_card/awesome_card.dart';
 import '../widgets/custom_credit_card.dart';
+import 'package:flutter_code/http_requests.dart';
 
 class DigitalWalletPage extends StatefulWidget{
 
@@ -11,6 +12,28 @@ class DigitalWalletPage extends StatefulWidget{
 }
 
 class _DigitalWalletPage extends State<DigitalWalletPage>{
+  HTTPRequest hr = HTTPRequest();
+  
+  List<_Card> _cards = [];
+
+  void initState(){
+    super.initState();
+    hr.getCards().then((c){
+      var cards = c[1];
+      setState(() {
+        for(int i = 0; i < cards.length; i++){
+          _cards.add(
+              _Card(
+                cards[i]["cvv"].toString(),
+                cards[i]["number"].toString(),
+                cards[i]["valid"].toString(),
+              )
+          );
+        }
+      });
+      }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +57,25 @@ class _DigitalWalletPage extends State<DigitalWalletPage>{
           Column(
             children: [
               CustomCreditCard(
-                cardNumber: "5450 5487 9847 7655",
-                cardExpiry: "10/28", cvv: "456",
+                cardNumber: _cards[0].number,
+                cardExpiry: _cards[0].expiry,
+                cvv: _cards[0].cvv,
                 cardHolderName: "David Vodopija",
-                bank: "Erste Banka", expdate: "Exp. Date",
-                textname: "Name", textExpiry: "MM/YY",
+                bank: "Erste Banka",
+                expdate: "Exp. Date",
+                textname: "Name",
+                textExpiry: "MM/YY",
+                showBack: false,
+              ),
+              CustomCreditCard(
+                cardNumber: _cards[1].number,
+                cardExpiry: _cards[1].expiry,
+                cvv: _cards[1].cvv,
+                cardHolderName: "David Vodopija",
+                bank: "Erste Banka",
+                expdate: "Exp. Date",
+                textname: "Name",
+                textExpiry: "MM/YY",
                 showBack: false,
               ),
             ],
@@ -47,4 +84,11 @@ class _DigitalWalletPage extends State<DigitalWalletPage>{
       ),
     );
   }
+}
+
+class _Card{
+  String cvv;
+  String number;
+  String expiry;
+  _Card(this.cvv, this.number, this.expiry);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code/http_requests.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:flutter_code/custom_colors.dart';
+import '../custom_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
@@ -52,8 +52,15 @@ class _DodajTrosakCamera extends State<DodajTrosakCamera>{
       //});
     }
     List categories = [
+      "Putovanja",
+      "Shopping",
+      "Pokloni",
       "Hrana",
-      "Elektronika"
+      "Gorivo",
+      "Sport",
+      "Ostalo",
+      "Bijela Tehnika",
+      "Higijena"
     ];
 
     List<DropdownMenuItem<int>> categoryList = [ ];
@@ -68,7 +75,9 @@ class _DodajTrosakCamera extends State<DodajTrosakCamera>{
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: CustomColor().mainColor,
+      ),
       body:
       SingleChildScrollView(
         child: Column(
@@ -110,6 +119,9 @@ class _DodajTrosakCamera extends State<DodajTrosakCamera>{
                     padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     width: 128,
                     child:  ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(CustomColor().mainColor),
+                      ),
                       onPressed: () async {
                         var pic = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 100);
                         imageFile = pic;
@@ -146,6 +158,8 @@ class _DodajTrosakCamera extends State<DodajTrosakCamera>{
               child: SfDateRangePicker(
                 onSelectionChanged: _onSelectionChanged,
                 selectionMode: DateRangePickerSelectionMode.single,
+                selectionColor: CustomColor().mainColor,
+                todayHighlightColor: CustomColor().mainColor,
                 initialSelectedRange: PickerDateRange(
                     DateTime.now().subtract(const Duration(days: 4)),
                     DateTime.now().add(const Duration(days: 3))),
@@ -155,6 +169,7 @@ class _DodajTrosakCamera extends State<DodajTrosakCamera>{
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColor().mainColor,
         onPressed: () async {
           var date = DateTime.parse(widget._selectedDate);
           if(date.hour == 0) date = date.subtract(Duration(minutes: 1));

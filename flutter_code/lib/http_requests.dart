@@ -272,4 +272,17 @@ class HTTPRequest {
       jsonDecode(utf8.decode(response.body.codeUnits))
     ];
   }
+
+  Future<List> getCards() async {
+    await checkBoxes();
+
+    String endpoint = "/getCard/";
+    Http.Response response =
+    await _sendPostRequest(endpoint: endpoint, dict: {}, sendToken: true);
+
+    return [
+      response.statusCode,
+      jsonDecode(utf8.decode(response.body.codeUnits))
+    ];
+  }
 }

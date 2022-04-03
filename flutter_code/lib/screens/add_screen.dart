@@ -54,8 +54,15 @@ class _DodajTrosak extends State<DodajTrosak>{
     List<DropdownMenuItem<int>> categoryList = [ ];
 
     List categories = [
+      "Putovanja",
+      "Shopping",
+      "Pokloni",
       "Hrana",
-      "Elektronika"
+      "Gorivo",
+      "Sport",
+      "Ostalo",
+      "Bijela Tehnika",
+      "Higijena"
     ];
 
     for(int i = 0; i < categories.length; i++){

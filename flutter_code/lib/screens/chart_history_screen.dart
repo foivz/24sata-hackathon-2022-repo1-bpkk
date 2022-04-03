@@ -47,15 +47,15 @@ class _HistoryChart extends State<HistoryChart>{
   ];
 
   List<_PieData> data3 = [
-    _PieData("cat0", 1, "35"),
-    _PieData("cat1", 2, "5"),
-    _PieData("cat2", 3, "8"),
-    _PieData("cat3", 4, "15"),
-    _PieData("cat4", 5, "19"),
-    _PieData("cat5", 6, "7"),
-    _PieData("cat6", 7, "10"),
-    _PieData("cat7", 8, "24"),
-    _PieData("cat8", 9, "32"),
+    _PieData("Putovanja", 1, "35"),
+    _PieData("Shopping", 2, "5"),
+    _PieData("Pokloni", 3, "8"),
+    _PieData("Hrana", 4, "15"),
+    _PieData("Gorivo", 5, "19"),
+    _PieData("Sport", 6, "7"),
+    _PieData("Ostalo", 7, "10"),
+    _PieData("Bijela Tehnika", 8, "24"),
+    _PieData("Higijena", 9, "32"),
   ];
 
   HTTPRequest hr = HTTPRequest();
